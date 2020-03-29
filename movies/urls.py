@@ -15,8 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from movies.views import AllMovies, MovieDetails
+from movies.views import AllMovies, MovieDetails, CommentFormView, MovieDetailsForm, MovieDetailsUpdate
 urlpatterns = [
     path('<int:id>', MovieDetails.as_view()),
     path('', AllMovies.as_view(), name='AllMovies' ),
+    path('create/', MovieDetailsForm.as_view(), name='MovieDetailsForm' ),
+    path('comment/<int:id>',CommentFormView.as_view()),
+    path('update/<int:id>', MovieDetailsUpdate.as_view(), name = 'MovieDetailsUpdate'),
 ]

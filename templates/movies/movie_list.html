@@ -2,11 +2,17 @@
 
 {% block content %}
     <h2>Movies</h2>
-	<div>{{object}}{{ object_list }}</div>
-<form method="post" action="{% url "AllMovies" %}">
-
-{{ object.form }}
-
-</form>
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Url</th>
+  </tr>
+{% for movie in object_list %}
+  <tr>
+	  <td><a href = "{{movie.id}}">{{ movie.title }}</td>
+	  <td>{{ movie.url }}</td>
+  </tr>
+  {% endfor %}
+</table>
 {% endblock %}
 
