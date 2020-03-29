@@ -2,41 +2,51 @@
 {% load embed_video_tags %}
 {% block content %}
 
-<div>
-<h1> Title: {{object.detail.title}} </h1>
-	<h2> <p>Description: {{object.detail.desription}} </p> </h2>
+<div class = "container">
+	<h1 class = 'display-3'> {{object.detail.title}} </h1>
+	{% if user.is_superuser %}
+		<a href="/movies/update/{{object.detail.id}}">Edit</a>
+	{% endif %}
+<div class = 'yt_video'>
 {% video object.detail.url as my_video %}
 {% video my_video '800x600' %}
 {% endvideo %}
-	</div>
-	<table>
-	  <tr>
-    <th>Name</th>
-    <th>Comment</th>
-  	</tr>
-  	{% for comment in object.comment %}
-  	<tr>
-    	<td>{{ comment.user.username }}</td>
-    	<td>{{ comment.body }}</td>
-  	</tr>
-  	{% endfor %}
-	</table>
+</div>
+<br>
+<h1 class = 'display-4'> Description </h1> <p>{{object.detail.desription}} </p>
+<br>
+
+    <div class="card">
+      <div class="card-body">
+        <!-- comments -->
+        <h2>{{ comments.count }} comments</h2>
+
+        {% for comment in object.comment %}
+        <div class="comments" style="padding: 10px;">
+          <p class="font-weight-bold">
+            {{ comment.user.username }}
+            <span class=" text-muted font-weight-normal">
+              {{ comment.created_on }}
+			  {{ comment.user.email }}
+            </span>
+          </p>
+          {{ comment.body | linebreaks }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+	<hr>
+		  {% if user.is_authenticated %}
+    <div class="card">
+      <div class="card-body">
+        <h3>Leave a comment</h3>
+  {% load crispy_forms_tags %}
 	<form method="post" action="comment/{{object.detail.id}}">
-   {{ object.form.as_p }}
+   {{ object.form|crispy }}
           {% csrf_token %}
- <button type="submit" class="btn btn-primary  btn-lg">Submit</button>
+ <button type="submit" class="btn btn-outline-primary  btn-lg">Submit</button>
 </form>
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Url</th>
-  </tr>
-{% for movie in object_list %}
-  <tr>
-	  <td><a href = "{{movie.id}}">{{ movie.title }}</td>
-	  <td>{{ movie.url }}</td>
-  </tr>
-  {% endfor %}
-</table>
+	</div>
+	{% endif %}
 {% endblock %}
 

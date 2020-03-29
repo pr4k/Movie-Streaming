@@ -3,6 +3,9 @@ from django.views.generic import FormView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from movies.models import Movie, Comment
 from movies.forms import CommentForm
+from django import template
+
+register = template.Library()
 
 # Create your views here.
 class MovieDetailsForm(CreateView):
