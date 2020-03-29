@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Movies</h2>
+	<div>{{object}}{{ object_list }}</div>
+<form method="post" action="{% url "AllMovies" %}">
+
+{{ object.form }}
+
+</form>
+{% endblock %}
+
