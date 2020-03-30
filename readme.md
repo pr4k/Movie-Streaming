@@ -22,7 +22,18 @@ So the app contains
   
 For images of each Section go to
 
-[images/](images/readme.md)
+[Images/](images/readme.md)
+
+Temporarily hosted at [pr4k.pythonanywhere.com](http://pr4k.pythonanywhere.com/)
+
+Testing Credentials:
+
+Admin:
+	username: pr4k
+	password: root
+General:
+	username: maxs
+	password: check@1234
 
 For starting the project:
 ```bash
@@ -45,6 +56,10 @@ pip3 install -r requirements.txt
 python3 manage.py runserver
 
 # Done
+---
+# Creating Super User
+python3 manage.py createsuperuser
+
 ```
 
 # Dependencies
