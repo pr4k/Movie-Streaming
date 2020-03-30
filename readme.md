@@ -24,14 +24,17 @@ For images of each Section go to
 
 [Images/](images/readme.md)
 
-Temporarily hosted at [pr4k.pythonanywhere.com](http://pr4k.pythonanywhere.com/)
+**Temporarily hosted at [pr4k.pythonanywhere.com](http://pr4k.pythonanywhere.com/)**
 
-Testing Credentials:
 
-Admin:
+## Testing Credentials:
+
+### Admin:
 	username: pr4k
 	password: root
-General:
+	
+	
+### General:
 	username: maxs
 	password: check@1234
 
