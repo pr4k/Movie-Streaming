@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+
 from django.shortcuts import render
 from django.views.generic import FormView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
@@ -8,11 +10,13 @@ from django import template
 register = template.Library()
 
 # Create your views here.
-class MovieDetailsForm(CreateView):
+class MovieDetailsForm(UserPassesTestMixin,CreateView):
     model = Movie
     fields = '__all__'
     success_url = '/movies'
-class MovieDetailsUpdate(UpdateView):
+    def test_func(self):
+        return self.request.user.is_superuser
+class MovieDetailsUpdate(UserPassesTestMixin,UpdateView):
     model = Movie
     fields = '__all__'
     template_name_suffix = '_update_form'
@@ -20,18 +24,20 @@ class MovieDetailsUpdate(UpdateView):
     def get_object(self):
         return Movie.objects.get(id = self.kwargs['id'])
 
-class MovieDetails(DetailView):
+    def test_func(self):
+        return self.request.user.is_superuser
+class MovieDetails(LoginRequiredMixin,DetailView):
     def get_object(self):
         post = Movie.objects.get(id = self.kwargs['id'])
         return {'detail':post,'form':CommentForm,'comment':Comment.objects.filter(post = post)}
     template_name = 'movies/movie_details.html'
     query_set = Movie.objects.all()
 
-class AllMovies(ListView):
+class AllMovies(LoginRequiredMixin,ListView):
     print("YEs")
     model = Movie
 
-class CommentFormView(FormView):
+class CommentFormView(LoginRequiredMixin,FormView):
     form_class = CommentForm
     success_url = '/movies'
     def form_valid(self,form):
