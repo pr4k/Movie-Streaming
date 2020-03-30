@@ -2,6 +2,8 @@ from django import template
 
 register = template.Library()
 
+# Not used
+
 @register.filter()
 def chunks(l):
     # For item i in a range that is a length of l,

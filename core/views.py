@@ -17,6 +17,11 @@ def home(request):
 
 
 def signup(request):
+    '''
+    View for handling signup:
+        - creates user and set the active status as false
+        - sends email on console
+    '''
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -41,10 +46,17 @@ def signup(request):
 
 
 def account_activation_sent(request):
+    ''' View for Activation link sent page '''
+
     return render(request, 'account_activation_sent.html')
 
 
 def activate(request, uidb64, token):
+    '''
+    View for activating account:
+        - It takes the token from link and check it with user account
+        If true, account is activated
+    '''
     try:
         uid = force_text(urlsafe_base64_decode(uidb64))
         user = User.objects.get(pk=uid)
